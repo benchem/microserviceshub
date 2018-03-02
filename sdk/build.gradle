@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     compile("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
     compile("com.alibaba:fastjson:$fastjson")
     compile group: 'org.jodd', name: 'jodd-http', version: '4.1.4'

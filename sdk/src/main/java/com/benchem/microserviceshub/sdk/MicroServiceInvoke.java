@@ -1,6 +1,8 @@
 package com.benchem.microserviceshub.sdk;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.benchem.microserviceshub.annotation.MicroService;
 import com.benchem.microserviceshub.bean.DomainInfo;
 import com.benchem.microserviceshub.bean.RequestType;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -46,6 +48,10 @@ public class MicroServiceInvoke {
         }else{
             return point.proceed();
         }
+
+        JSONObject invokeReuslt = JSONObject.parseObject(result);
+        int errCode = invokeReuslt.getIntValue("errcode");
+
 
         Type targetClass = methodSignature.getMethod().getAnnotatedReturnType().getType();
         Object reValue = JSON.parseObject(result, targetClass);

@@ -1,4 +1,4 @@
-package com.benchem.microserviceshub.sdk;
+package com.benchem.microserviceshub.annotation;
 
 import com.benchem.microserviceshub.bean.DomainType;
 import com.benchem.microserviceshub.bean.RequestType;

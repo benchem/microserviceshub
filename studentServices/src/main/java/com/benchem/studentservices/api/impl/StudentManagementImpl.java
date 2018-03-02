@@ -13,6 +13,7 @@ public class StudentManagementImpl implements StudentManagement{
     @Override
     public Student findStudent(String name) {
         if(name.equals("zhangsan")) throw new MicroServiceException(StudentServiceStateCode.NOT_FOUND);
+        if(name.equals("lisi")) throw new NullPointerException("aaa...aaa");
         return new Student(name.toLowerCase(), "13750378000");
     }
 

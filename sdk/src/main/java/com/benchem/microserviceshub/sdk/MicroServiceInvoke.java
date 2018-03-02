@@ -4,11 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.benchem.microserviceshub.annotation.MicroService;
 import com.benchem.microserviceshub.bean.DomainInfo;
+import com.benchem.microserviceshub.bean.DomainType;
 import com.benchem.microserviceshub.bean.RequestType;
+import com.benchem.microserviceshub.lang.MicroServiceException;
+import com.benchem.microserviceshub.lang.RemoteStateCode;
+import com.benchem.microserviceshub.lang.StateCode;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.aspectj.weaver.tools.cache.AsynchronousFileCacheBacking;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
@@ -49,12 +54,24 @@ public class MicroServiceInvoke {
             return point.proceed();
         }
 
-        JSONObject invokeReuslt = JSONObject.parseObject(result);
-        int errCode = invokeReuslt.getIntValue("errcode");
-
-
-        Type targetClass = methodSignature.getMethod().getAnnotatedReturnType().getType();
-        Object reValue = JSON.parseObject(result, targetClass);
-        return reValue;
+        if(microService.domainType() == DomainType.Internal) {
+            JSONObject invokeReuslt = JSONObject.parseObject(result);
+            int code = invokeReuslt.getIntValue("statecode");
+            if(code == 0) {
+                Type targetClass = methodSignature.getMethod().getAnnotatedReturnType().getType();
+                String jsonStr = invokeReuslt.getJSONObject("result").toJSONString();
+                Object reValue = JSON.parseObject(jsonStr, targetClass);
+                return reValue;
+            } else {
+                StateCode stateCode = new RemoteStateCode(code, invokeReuslt.getString("errmsg"));
+                throw new MicroServiceException(stateCode);
+            }
+        } else if(microService.domainType() == DomainType.External){
+            Type targetClass = methodSignature.getMethod().getAnnotatedReturnType().getType();
+            Object reValue = JSON.parseObject(result, targetClass);
+            return reValue;
+        } else{
+            return point.proceed();
+        }
     }
 }

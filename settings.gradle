@@ -2,4 +2,5 @@ rootProject.name = 'microserviceshub'
 
 include 'sdk'
 include 'studentServices'
+include 'libraryServices'
 

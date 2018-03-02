@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MicroServicesDomains {
-    public final String StudentSvr = "100000";
-    public final String LibrarySvr = "200000";
+    public static final String StudentSvr = "100000";
+    public static final String LibrarySvr = "200000";
 
     static MicroServicesDomains instance = new MicroServicesDomains();
     private Map<String, DomainInfo> addressBook = new HashMap<>();

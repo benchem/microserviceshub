@@ -1,17 +1,15 @@
-package com.benchem.studentservices.lang;
+package com.benchem.libraryservices.lang;
 
-import com.benchem.microserviceshub.lang.MicroServiceStateCode;
 import com.benchem.microserviceshub.lang.StateCode;
 
-public enum StudentServiceStateCode implements StateCode {
-    NOT_FOUND(100001, "找不到这个学生"),
-    STUDENT_EXITES(100002, "这个学生已注册")
+public enum LibraryServiceStateCode implements StateCode {
+    CAN_NOT_READ(200001, "这个学生不能借书"),
     ;
 
     private final Integer stateCode;
     private final String message;
 
-    StudentServiceStateCode(Integer stateCode, String message){
+    LibraryServiceStateCode(Integer stateCode, String message){
         this.stateCode = stateCode;
         this.message = message;
     }

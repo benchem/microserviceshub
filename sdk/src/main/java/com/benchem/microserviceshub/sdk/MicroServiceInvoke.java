@@ -58,9 +58,10 @@ public class MicroServiceInvoke {
             JSONObject invokeReuslt = JSONObject.parseObject(result);
             int code = invokeReuslt.getIntValue("statecode");
             if(code == 0) {
-                Type targetClass = methodSignature.getMethod().getAnnotatedReturnType().getType();
+                Type targetType = methodSignature.getMethod().getAnnotatedReturnType().getType();
+                if(((Class)targetType).isPrimitive()) return invokeReuslt.get("result");
                 String jsonStr = invokeReuslt.getJSONObject("result").toJSONString();
-                Object reValue = JSON.parseObject(jsonStr, targetClass);
+                Object reValue = JSON.parseObject(jsonStr, targetType);
                 return reValue;
             } else {
                 StateCode stateCode = new RemoteStateCode(code, invokeReuslt.getString("errmsg"));

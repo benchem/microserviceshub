@@ -13,7 +13,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.aspectj.weaver.tools.cache.AsynchronousFileCacheBacking;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
@@ -34,22 +33,12 @@ public class MicroServiceInvoke {
             for (int index=0; index<argsNames.length; index++){
                 queryParam.put(argsNames[index], argsValues[index]);
             }
-            result = HttpInvokeHelper.get(
-                    domainInfo.getProtocol(),
-                    domainInfo.getDomain(),
-                    domainInfo.getPort(),
-                    microService.path(),
-                    queryParam
-            );
+            HttpGetHystrixCommand getCmd = new HttpGetHystrixCommand(domainInfo, microService.path(), queryParam);
+            result = getCmd.execute();
         }else if(microService.type() == RequestType.POST){
             String queryParam = argsValues.length == 0 ? "" : JSON.toJSONString(argsValues[0]);
-            result = HttpInvokeHelper.post(
-                    domainInfo.getProtocol(),
-                    domainInfo.getDomain(),
-                    domainInfo.getPort(),
-                    microService.path(),
-                    queryParam
-            );
+            HttpPostHystrixCommand postCmd = new HttpPostHystrixCommand(domainInfo, microService.path(), queryParam);
+            result = postCmd.execute();
         }else{
             return point.proceed();
         }

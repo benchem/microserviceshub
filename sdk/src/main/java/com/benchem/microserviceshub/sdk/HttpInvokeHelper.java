@@ -1,10 +1,10 @@
 package com.benchem.microserviceshub.sdk;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
 import jodd.util.StringPool;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

@@ -1,5 +1,6 @@
 package com.benchem.studentservices.proxy;
 
+import com.alibaba.fastjson.JSONObject;
 import com.benchem.microserviceshub.annotation.MicroService;
 import com.benchem.microserviceshub.bean.RequestType;
 import com.benchem.microserviceshub.sdk.MicroServicesDomains;
@@ -22,6 +23,11 @@ public class SchoolLibraryServices {
 
     @MicroService(domain= MicroServicesDomains.LibrarySvr, path = "/library/checkstudent2", type = RequestType.POST)
     public void checkStudent2(Student student) {
+        throw new NotImplementedException();
+    }
+
+    @MicroService(domain= MicroServicesDomains.LibrarySvr, path = "/library/checkstudent3", type = RequestType.POST)
+    public Student checkStudent3(Student student) {
         throw new NotImplementedException();
     }
 }

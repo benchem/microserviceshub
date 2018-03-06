@@ -37,9 +37,11 @@ public class StudentController {
     }
 
     @RequestMapping("/sayhi")
-    public void sayHi(@RequestParam String name){
+    public String sayHi(@RequestParam String name){
         Student std = studentService.findStudent(name);
         libraryServices.checkStudent2(std);
-    }
 
+        Student std2 = libraryServices.checkStudent3(std);
+        return std2.getName();
+    }
 }

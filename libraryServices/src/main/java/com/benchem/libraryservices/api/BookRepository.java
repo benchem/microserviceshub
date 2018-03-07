@@ -8,5 +8,5 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, String> {
     List<Book> findByName(String bookName);
 
-    List<Book> findByCode(String bookCode);
+    List<Book> findByNameOrCodeLikeOrderByCode(String name, String code);
 }

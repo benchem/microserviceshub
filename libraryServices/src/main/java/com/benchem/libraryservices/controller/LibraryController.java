@@ -47,8 +47,8 @@ public class LibraryController {
     }
 
     @RequestMapping("/list")
-    public List<Book> getList(@RequestParam(required = false) String name){
-        return bookRepository.findByName(name);
+    public List<Book> getList(@RequestParam(required = false) String keyword){
+        return bookRepository.findByNameOrCodeLikeOrderByCode(keyword, keyword);
     }
 
     @RequestMapping("/create")

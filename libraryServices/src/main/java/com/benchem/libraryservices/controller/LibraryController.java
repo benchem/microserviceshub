@@ -9,10 +9,7 @@ import com.benchem.libraryservices.lang.LibraryServiceStateCode;
 import com.benchem.microserviceshub.annotation.MicroService;
 import com.benchem.microserviceshub.lang.MicroServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,7 +48,7 @@ public class LibraryController {
         return bookRepository.findByNameOrCodeLikeOrderByCode(keyword, keyword);
     }
 
-    @RequestMapping("/create")
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Book createBook(@RequestBody JSONObject bookInfo){
         Book book = new Book();
         book.setName(bookInfo.getString("name"));
